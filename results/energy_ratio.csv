@@ -1,0 +1,4 @@
+fluid,load_kg,wall_energy_MJ,load_cooling_capacity_MJ,ratio_pct
+LOX,1016.9,5.91,206.8,2.86
+LCH4,375.9,5.33,181.8,2.93
+LH2,60.9,6.72,27.7,24.3
