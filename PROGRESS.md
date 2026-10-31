@@ -12,6 +12,9 @@ Read PROJECT_PLAN.md first. Pick the first unchecked item in the backlog, finish
 - [ ] "Defend this" sheet for Thomas (notes/defend_this.md): key assumptions and likely interview questions with short answers.
 - [ ] LinkedIn post draft and outreach message draft (notes/outreach.md). Do NOT send anything.
 
+## Theory lessons (every run)
+For every backlog item completed, write a lecture-style lesson in notes/lessons/NN_topic.md for Thomas (final-year aerospace MEng student). Teach like his lecturer: start from first principles, explain why each equation holds and what each assumption means physically, use one worked example with real numbers from this model, show what goes wrong if an assumption fails, and end with 3 to 5 self-test questions with answers hidden under a "Answers" heading. Cite textbooks or papers with links where possible. Plain prose, no long dashes.
+
 ## Rules for every run
 - Run `python -m pytest -q` before committing. Never commit failing tests.
 - Small commits with clear messages. Push to main.
