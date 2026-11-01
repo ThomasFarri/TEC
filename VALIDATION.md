@@ -115,6 +115,31 @@ The thermodynamic band for this tube is 0.039 to 0.067 kg (best case to saturate
 - Darr, S.R., Dong, J., Glikin, N., Hartwig, J.W., Chung, J.N., "Rewet Temperature Correlations for Liquid-Nitrogen Boiling Pipe Flows Across Varying Flow Conditions and Orientations", J. Thermal Sci. Eng. Appl. 11(5), doi:10.1115/1.4042857, NTRS [20200000632](https://ntrs.nasa.gov/citations/20200000632).
 - Hartwig, J., Hu, H., Styborski, J., Chung, J.N., "Comparison of cryogenic flow boiling in liquid nitrogen and liquid hydrogen chilldown experiments", Int. J. Heat Mass Transfer 88 (2015), doi:10.1016/j.ijheatmasstransfer.2015.04.102, NTRS [20190007959](https://ntrs.nasa.gov/citations/20190007959). Abstract only.
 
+## v2 transient line chilldown: calibration and check
+
+Module: `cryotransfer/transient.py`. Script: `scripts/run_transient.py`. Results: `results/transient_check.csv`, `results/transient_application.csv`, `figures/fig7_transient_line_chilldown.png`. Tests: `tests/test_transient.py`.
+
+The model uses the correlation forms of Darr and Hartwig (2019, NTRS 20190029114) for film, transition and nucleate boiling and rewet temperature. Two choices are ours, not the paper's: the two-phase Reynolds number in the film-boiling term (Dougall and Rohsenow form, because the paper's definition was not readable) and dropping the inverted-annular film term. To absorb these, one multiplier on film-boiling heat transfer, C_fb, is calibrated against one test and checked on the others.
+
+Input flow for each test is its average flow over chilldown (measured mass / measured time), so predicting time is the same as predicting mass. Initial wall 290 K as in Validation 2.
+
+| Test | Conditions | G [kg/m2 s] | Measured time [s] | Model, C_fb = 1 | Model, C_fb = 2.41 | Error |
+|---|---|---|---|---|---|---|
+| F2 | 0.05 g, continuous | 557 | 14.6 | 32.1 | 14.6 | calibration point |
+| F1 | 0.38 g | 668 | 15.1 | 27.3 | 12.5 | -17 % |
+| F12 | ends in 1 g | 519 | 21.1 | 42.0 | 19.1 | -9 % |
+| F5 | low flow, includes high g | 35 | 70.6 | 638 | 272 | +286 % |
+| F8 | low flow, includes high g | 32 | 80.3 | 682 | 291 | +262 % |
+| F10 | low flow, includes high g | 8.7 | 172 | 2247 | 948 | +451 % |
+
+What this says:
+
+- With the uncalibrated correlations (C_fb = 1) the model is about twice too slow at high flow. One calibration factor of 2.41 brings the other two high-flow tests within 17 %.
+- At low flow (G below about 40 kg/m2 s) the model is 3 to 6 times too slow even after calibration. The film-boiling heat transfer it uses scales with Re to the power 0.88, which falls too fast at low flow. Two likely reasons: the omitted inverted-annular term, which contains gravity, matters at low flow, and these three tests include high-g parts of the parabola (footnote a in the paper). **v2 should not be used below G of about 300 kg/m2 s until it is checked against clean low-flow data.**
+- The model is calibrated on LN2. LOX and LCH4 use the same correlation forms, an extrapolation. Rewet temperatures from the Weber-number correlation become large at high flow (up to 264 K for LCH4 at 0.5 kg/s), which is outside the range it was fitted on.
+
+Application (3 m, 1/2 in. 304 SS line, 400 kPa, 5 K subcooled, from 290 K, C_fb = 2.41): LOX needs 2.4 to 3.4 kg and 7 to 118 s over 0.02 to 0.5 kg/s; LCH4 needs 0.9 to 1.5 kg and 3 to 45 s. Efficiency (thermodynamic minimum / used) is 6 to 9 %, in line with the 4 to 6 % measured for the bare tube at high flow in Validation 2. Only the upper part of this flow range (G above about 300 kg/m2 s, which is above about 0.03 kg/s here) lies inside the calibrated regime.
+
 ## Thomas to download
 
 These would strengthen Validation 1. Please download the PDFs from NTRS and drop them in a `refs/` folder (not committed if large).

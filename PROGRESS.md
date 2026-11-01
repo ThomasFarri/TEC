@@ -6,7 +6,7 @@ Read PROJECT_PLAN.md first. Pick the first unchecked item in the backlog, finish
 - [x] v1 equilibrium model, tests, three figures (31 Oct)
 - [x] Validation 1 (1 Nov): find NASA LH2 no-vent fill test data (K-Site, NASA Lewis/Glenn, early 1990s, e.g. Moran, Nyland, Driscoll; also Chato's charge-hold-vent work) via NTRS abstract pages. Extract test conditions (tank volume, wall mass, initial wall T, inlet T, final fill, final pressure). Write scripts/validate_nvf.py comparing model vs test. Record sources in VALIDATION.md. If data are only in PDFs that cannot be fetched, list the exact papers in VALIDATION.md under "Thomas to download".
 - [x] Validation 2 (1 Nov): line chilldown vs Hartwig / NASA Glenn LN2 and LH2 chilldown tests (mass of propellant to chill a line), same approach.
-- [ ] v2: transient line chilldown (1D wall nodes, flow-boiling correlations from Hartwig et al.), giving chilldown time. New module cryotransfer/transient.py with tests.
+- [x] v2 (1 Nov): transient line chilldown (1D wall nodes, flow-boiling correlations from Hartwig et al.), giving chilldown time. New module cryotransfer/transient.py with tests.
 - [ ] Sensitivity study: inlet subcooling, receiver pressure limit, initial wall temperature, tank material (Al vs SS). Figure 4.
 - [ ] Technical note draft (notes/technical_note.md, 4 to 6 pages): problem, method, validation, results, limitations, questions for TEC.
 - [ ] "Defend this" sheet for Thomas (notes/defend_this.md): key assumptions and likely interview questions with short answers.
@@ -23,3 +23,4 @@ For every backlog item completed, write a lecture-style lesson in notes/lessons/
 
 ## Log
 - 2026-10-31: v1 model done. Key result: wall energy / load cooling capacity is ~3 % for LOX and LCH4 vs ~24 % for LH2 (1 m3 Al tank, 40 kg wall, from 290 K).
+- 2026-11-01: Validation 1, Validation 2 and v2 done (lessons 02 to 04). No-vent fill: equilibrium model vs 32 NASA LH2 fills (TM-106018, TM-106293), mean absolute error 7 % in final pressure, max 26 % (warm-inlet spray-bar runs, non-equilibrium). Line chilldown: no flight test beats the thermodynamic minimum; real efficiency 3 to 69 % (bare tube at high flow about 4 %). v2 transient model, film boiling calibrated on one test (C_fb = 2.41), other high-flow tests within 17 %; fails at low flow (3 to 6 times too slow), range limit stated. 3 m LOX line: 2.4 to 3.4 kg. Push from the scheduled run was refused (403), so Thomas pushes these commits by hand. Next: sensitivity study (figure 4).

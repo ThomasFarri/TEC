@@ -23,6 +23,12 @@ Per kilogram loaded, methane costs roughly three times more than oxygen, because
 
 Thermodynamically, methalox transfer is forgiving. So the hard engineering problem is not the energy budget. It is the non-equilibrium behaviour the energy budget ignores: stratification, heat-transfer rate during fill, and venting liquid in microgravity.
 
+## Validation and v2 (1 Nov)
+
+- **No-vent fill vs NASA LH2 tests** (32 fills, two tanks): mean absolute error 7 % in final pressure, worst 26 %. Figure 5. Details in VALIDATION.md.
+- **Line chilldown vs NASA LN2 flight tests** (28 tests): every test uses more than the v1 thermodynamic minimum, as it must. Real efficiency is 3 to 69 %; a bare tube at high flow is about 4 %. Figure 6.
+- **v2 transient line chilldown** (`cryotransfer/transient.py`): 1D wall nodes with a film, transition and nucleate boiling curve. One film-boiling factor calibrated on one test; the other high-flow tests agree within 17 %. Not valid below a mass flux of about 300 kg/m2 s. A 3 m half-inch LOX line from 290 K needs about 2.4 to 3.4 kg. Figure 7.
+
 ## Assumptions (v1)
 
 - Fluid and wall are in thermal equilibrium and the fluid is homogeneous. This is a best case: real tanks stratify and reach higher pressure.
