@@ -16,7 +16,8 @@ from scipy.optimize import brentq
 
 from . import materials
 
-SUPPORTED_FLUIDS = ("Oxygen", "Methane", "Hydrogen", "Nitrogen")
+SUPPORTED_FLUIDS = ("Oxygen", "Methane", "Hydrogen", "ParaHydrogen",
+                    "Nitrogen")
 
 
 class Fluid:

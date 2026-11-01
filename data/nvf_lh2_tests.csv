@@ -1,0 +1,48 @@
+# NASA Lewis LH2 no-vent fill test data, transcribed from report tables.
+# Columns: source, test, injection, wall_T, inlet_T, flow, p_final, fill_final_pct, units
+# units SI = K, K, kg/h, kPa (source A, as printed); US = R, R, lbm/h, psia (source B, as printed)
+# Source A: Taylor W.J., Chato D.J., "Comparing the Results of an Analytical Model of the
+#   No-Vent Fill Process With No-Vent Fill Test Results for a 4.96 m3 (175 ft3) Tank",
+#   NASA TM-106018, 1993, NTRS 19930017966, Table I (values in SI as printed).
+#   Tank: 4.96 m3, 2219 Al, 149.63 kg.
+# Source B: Chato D.J., "Ground Testing for the No-Vent Fill of Cryogenic Tanks: Results of
+#   Tests for a 71 Cubic Foot Tank", NASA TM-106293 / AIAA-93-1967, 1993, NTRS 19940013013,
+#   Table 1 (printed in deg R, lbm/hr, psia; kept as printed, converted in
+#   scripts/validate_nvf.py). Tank: 71 ft3 (2.0105 m3), 2219 Al, 243 lb (110.2 kg),
+#   consistent with the stated 3.41 lb/ft3.
+# Test 330 (source B) failed: "the initial wall cooldown produced a pressure transient which
+#   exceeded the supply pressure"; final fill 0 %. Kept for honesty, excluded from error stats.
+source,test,injection,wall_T,inlet_T,flow,p_final,fill_final_pct,units
+A,Fill18,bottom spray,21.7,22.2,495.0,177,94,SI
+A,Fill19,top spray,104.4,23.0,421.8,227,94,SI
+A,Fill20,top spray,126.1,22.4,337.7,257,94,SI
+A,Fill21,bottom spray,101.7,22.2,448.6,233,94,SI
+A,Fill22,bottom spray,66.7,21.7,505.0,187,94,SI
+A,Fill23,top spray,70.0,22.8,419.5,210,94,SI
+A,K2091,top spray,18.1,23.4,442.2,204,94,SI
+A,K251,top spray,23.3,21.9,234.0,181,94,SI
+A,K2631,top spray,86.0,22.3,477.2,195,94,SI
+A,K2227,bottom spray,17.0,22.0,534.5,177,94,SI
+A,K2731,bottom spray,87.9,21.9,510.0,196,94,SI
+B,286,spray bar,32.7,37.0,630,20.8,96,US
+B,291,spray bar,46.0,31.1,1047,5.7,95,US
+B,298,spray bar,31.7,37.2,998,18.0,97,US
+B,299,spray bar,45.0,37.2,1349,17.7,96,US
+B,311,spray bar,38.1,31.1,1228,5.6,94,US
+B,324,spray bar,155.5,37.0,877,29.7,97,US
+B,326,spray bar,151.3,31.2,1087,8.3,94,US
+B,330,spray bar,232.3,31.4,804,33.3,0,US
+B,332,spray bar,178.8,31.3,1017,10.5,95,US
+B,337,spray bar,37.5,38.9,879,27.1,97,US
+B,339,spray bar,33.5,39.2,1256,29.8,97,US
+B,340,spray bar,51.8,31.0,1561,5.8,92,US
+B,283,bottom orifice,56.4,37.4,790,19.9,97,US
+B,287,bottom orifice,29.3,30.9,1385,5.4,96,US
+B,297,bottom orifice,58.4,37.4,1380,16.7,96,US
+B,300,bottom orifice,29.9,37.2,1747,16.8,96,US
+B,309,bottom orifice,29.3,31.0,1724,5.6,93,US
+B,321,bottom orifice,147.6,37.0,1126,20.8,96,US
+B,328,bottom orifice,152.5,30.8,1652,8.0,93,US
+B,334,bottom orifice,173.9,30.8,1518,9.4,94,US
+B,336,bottom orifice,41.0,38.9,1198,22.3,96,US
+B,338,bottom orifice,29.6,39.2,1735,23.0,97,US

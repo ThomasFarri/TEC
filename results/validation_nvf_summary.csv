@@ -1,0 +1,4 @@
+set,n,mean_err_pct,mean_abs_err_pct,max_abs_err_pct,mean_abs_err_kPa
+A,11,2.7,7.7,20.0,16.0
+B,21,-5.0,6.6,26.3,9.9
+all,32,-2.3,7.0,26.3,12.0
