@@ -61,6 +61,60 @@ For comparison, source A reports that its own equilibrium model ran "within 0.03
 - All validation is LH2 at wall masses of 30 to 55 kg/m3. LOX and LCH4 have much smaller wall-to-load energy ratios (lesson 1), so the equilibrium model should be at least as good for them on final pressure. That is an argument, not a validation.
 - Tank B results for warm inlet with the spray bar show that the model can underpredict final pressure by about a quarter. A design margin of that order on pressure is advisable before relying on equilibrium predictions.
 
+## Validation 2: line chilldown against NASA LN2 flight tests
+
+Script: `scripts/validate_chilldown.py`. Data: `data/chilldown_ln2_flight_tests.csv`. Results: `results/validation_chilldown.csv`, `figures/fig6_validation_chilldown.png`. Tests: `tests/test_validation_chilldown.py`.
+
+### Source used
+
+Hartwig, J., Chung, J.N., Dong, J., Han, B., Wang, H., Darr, S., Taliaferro, M., Jain, S., Doherty, M., "Nitrogen flow boiling and chilldown experiments in microgravity using pulse flow and low-thermally conductive coatings", npj Microgravity 8:33 (2022), doi:10.1038/s41526-022-00220-9, open access at https://pmc.ncbi.nlm.nih.gov/articles/PMC9363417/. Full text read.
+
+Taken: Table 1, 28 parabolic-flight tests (0.05 g and 0.38 g) giving inlet pressure, continuous or pulse flow, coating, chilldown time, total chilldown mass and steady Reynolds number. Test section from the Methods: "0.914 m (36 in) long, 0.051 cm wall thickness, 1.27 cm outer diameter SS304". The bare tube and tubes with 4 and 7 layers of FEP (Teflon) coating, about 15 um per layer, were flown. The paper states 2.5 % uncertainty on mass consumed.
+
+### Method
+
+The v1 function `wall_chilldown_mass` gives two thermodynamic bounds on the LN2 needed to cool the tube: the best case, where vapour leaves at the local wall temperature, and the saturated-vapour case. The best case is a true lower limit: no test can use less. So this comparison does not ask "does the model match?" but "how close do real chilldowns get to the limit?". The ratio m_best / m_measured is called the chilldown efficiency here.
+
+Assumptions:
+
+1. Initial wall temperature 290 K. The paper does not give it, only that tubes were reheated with warm gas between tests. Using 250 K or 300 K changes m_best by -19 % or +4 %.
+2. Inlet is saturated liquid at the measured inlet pressure (inlet temperature is not given numerically).
+3. Vapour leaves at 101 kPa (outlet pressure not given numerically).
+4. Chilldown ends with the wall at T_sat(inlet) + 2 K.
+5. Only the 0.141 kg test-section tube is counted (304 SS density 7900 kg/m3). The paper does not say how much plumbing downstream of the test section, before the gas meter, was also cooled by the metered flow. Any extra metal makes the measured mass larger, so the efficiencies below are lower bounds.
+
+### Results
+
+The thermodynamic band for this tube is 0.039 to 0.067 kg (best case to saturated vapour). The measured masses run from 0.056 kg to 1.17 kg. Every test uses more than the best-case limit, as it must; this is checked in the test suite.
+
+| Group | Tests | Efficiency range | Mean |
+|---|---|---|---|
+| All | 28 | 3.3 to 69 % | 15.5 % |
+| Bare tube, Re above 20,000, continuous | 3 | 3.3 to 4.4 % | 3.8 % |
+| Bare tube, Re above 20,000, pulse | 4 | 6.0 to 6.5 % | 6.2 % |
+| Bare tube, all | 12 | 3.3 to 24 % | 9.5 % |
+| Coated tubes, all | 16 | 6.6 to 69 % | 20 % |
+
+### What this says
+
+- **The v1 line chilldown band is a limit, not a prediction.** Real chilldowns used 1.5 to 30 times the best-case mass. A bare tube chilled fast with continuous flow is the worst, at about 4 % efficiency: most of the liquid runs straight through, because a vapour film insulates the wall (film boiling) and the liquid has no time to pick up heat.
+- **Pulse flow roughly doubles efficiency for a bare tube at high Re** (3.8 % to 6.2 %), and **coatings help more**. The best tests (69 % for a 4-layer tube at Re about 8,000, and 43 to 45 % for 7-layer tubes at Re about 9,000 to 11,000) combine a coating with moderate flow. A thin insulating layer makes the surface cool quickly, which collapses the vapour film early and moves the tube into nucleate boiling, where heat transfer is far better.
+- **Consequence for the v1 results.** Lesson 1 and figure 3 give 0.2 to 0.3 kg to chill a 3 m half-inch line. Using the 4 to 15 % efficiencies measured here, a real line could need roughly 1.5 to 6 kg. That is still small against a 1000 kg LOX load, but it is no longer negligible if the line is chilled many times. The v2 transient model is needed to predict this efficiency rather than borrow it.
+
+### Honest limits
+
+- LN2 only. The LH2 line chilldown reports found (below) give geometry and flow, but no per-test chilldown mass in the readable text.
+- Initial wall temperature, inlet temperature and outlet pressure are assumed, not taken from the paper.
+- The efficiency depends on where the meter integration starts and how much downstream metal it includes, neither of which is stated.
+
+### Other chilldown sources found
+
+- Darr, S.R., Hartwig, J.W., "Two-Phase Convection Heat Transfer Correlations for Liquid Hydrogen Pipe Chilldown", Space Cryogenics Workshop 2019, NTRS [20190029114](https://ntrs.nasa.gov/citations/20190029114). Read. Gives the LH2 correlation set (film, transition, nucleate boiling, rewet temperature) to be used in v2. Mean absolute wall-temperature error 19.5 K.
+- Hartwig, J., Vera, J., "Numerical Modeling of the Transient Chilldown Process of a Cryogenic Propellant Transfer Line", NTRS [20150011065](https://ntrs.nasa.gov/citations/20150011065). LH2, 1.27 cm OD line, 3.42 kg and 1.61 m warm section, flows 0.0023 to 0.036 kg/s. No per-test chilldown mass.
+- Rame, E., Hartwig, J.W., McQuillen, J.B., "Flow visualization of liquid hydrogen line chilldown tests", AIAA 2014, NTRS [20140008545](https://ntrs.nasa.gov/citations/20140008545). Reports cumulative pulse-flow mass about 30 % of trickle flow.
+- Darr, S.R., Dong, J., Glikin, N., Hartwig, J.W., Chung, J.N., "Rewet Temperature Correlations for Liquid-Nitrogen Boiling Pipe Flows Across Varying Flow Conditions and Orientations", J. Thermal Sci. Eng. Appl. 11(5), doi:10.1115/1.4042857, NTRS [20200000632](https://ntrs.nasa.gov/citations/20200000632).
+- Hartwig, J., Hu, H., Styborski, J., Chung, J.N., "Comparison of cryogenic flow boiling in liquid nitrogen and liquid hydrogen chilldown experiments", Int. J. Heat Mass Transfer 88 (2015), doi:10.1016/j.ijheatmasstransfer.2015.04.102, NTRS [20190007959](https://ntrs.nasa.gov/citations/20190007959). Abstract only.
+
 ## Thomas to download
 
 These would strengthen Validation 1. Please download the PDFs from NTRS and drop them in a `refs/` folder (not committed if large).
@@ -69,3 +123,6 @@ These would strengthen Validation 1. Please download the PDFs from NTRS and drop
 2. Chato, D.J., Moran, M.E., Nyland, T.W., NASA TM-103155, 1990, NTRS 19900016962. Needed: the receiver wall mass (not stated in the text, perhaps in a drawing or a companion report).
 3. Taylor, W.J., Chato, D.J., NASA TM-104492, 1991, on improved thermodynamic modelling of the no-vent fill process (cited by source A; exact title not yet confirmed). Describes the equilibrium model used at Lewis.
 4. Chato, D.J., NASA TM-102039, 1989, analysis of the 4.96 m3 tank no-vent fill. Cited by source A.
+5. Hartwig, J., Hu, H., Styborski, J., Chung, J.N., "Comparison of cryogenic flow boiling in liquid nitrogen and liquid hydrogen chilldown experiments", Int. J. Heat Mass Transfer 88 (2015), doi:10.1016/j.ijheatmasstransfer.2015.04.102 (NTRS 20190007959 has no download). Needed: per-test LH2 and LN2 chilldown time and mass, for an LH2 version of Validation 2.
+6. Hartwig, J., Darr, S., Asencio, A., "Assessment of existing two phase heat transfer coefficient and critical heat flux correlations for cryogenic flow boiling in pipe quenching experiments", Int. J. Heat Mass Transfer 93 (2016) 441 to 463. Cited as the basis of the correlation choice for v2. Title as cited in secondary sources; check it.
+7. The npj Microgravity 2022 paper above: Figure 2 time histories, to check where the metered mass integration starts.

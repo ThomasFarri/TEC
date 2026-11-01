@@ -5,7 +5,7 @@ Read PROJECT_PLAN.md first. Pick the first unchecked item in the backlog, finish
 ## Backlog (in order)
 - [x] v1 equilibrium model, tests, three figures (31 Oct)
 - [x] Validation 1 (1 Nov): find NASA LH2 no-vent fill test data (K-Site, NASA Lewis/Glenn, early 1990s, e.g. Moran, Nyland, Driscoll; also Chato's charge-hold-vent work) via NTRS abstract pages. Extract test conditions (tank volume, wall mass, initial wall T, inlet T, final fill, final pressure). Write scripts/validate_nvf.py comparing model vs test. Record sources in VALIDATION.md. If data are only in PDFs that cannot be fetched, list the exact papers in VALIDATION.md under "Thomas to download".
-- [ ] Validation 2: line chilldown vs Hartwig / NASA Glenn LN2 and LH2 chilldown tests (mass of propellant to chill a line), same approach.
+- [x] Validation 2 (1 Nov): line chilldown vs Hartwig / NASA Glenn LN2 and LH2 chilldown tests (mass of propellant to chill a line), same approach.
 - [ ] v2: transient line chilldown (1D wall nodes, flow-boiling correlations from Hartwig et al.), giving chilldown time. New module cryotransfer/transient.py with tests.
 - [ ] Sensitivity study: inlet subcooling, receiver pressure limit, initial wall temperature, tank material (Al vs SS). Figure 4.
 - [ ] Technical note draft (notes/technical_note.md, 4 to 6 pages): problem, method, validation, results, limitations, questions for TEC.

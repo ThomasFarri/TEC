@@ -1,0 +1,44 @@
+# LN2 line chilldown flight tests (parabolic flight, 0.05 g and 0.38 g), transcribed from Table 1 of:
+#   Hartwig J., Chung J.N., Dong J., Han B., Wang H., Darr S., Taliaferro M., Jain S., Doherty M.,
+#   "Nitrogen flow boiling and chilldown experiments in microgravity using pulse flow and
+#   low-thermally conductive coatings", npj Microgravity 8:33 (2022),
+#   doi:10.1038/s41526-022-00220-9, open access https://pmc.ncbi.nlm.nih.gov/articles/PMC9363417/
+# Test section (Methods, verbatim): "0.914 m (36 in) long, 0.051 cm wall thickness, 1.27 cm outer
+#   diameter SS304". Coating: FEP (Teflon), ~15.12 um per layer; 4 L and 7 L = 4 and 7 layers.
+# Columns as printed: inlet pressure is time-averaged at the test-section inlet; period and duty
+#   describe pulse flow (period blank and duty 100 = continuous flow); chilldown time [s];
+#   total chilldown mass [kg] = integral of metered flow to end of chilldown; steady Re; steady mass
+#   flux [kg/m2 s].
+# Footnotes in the paper: a = multi-parabola (includes high-g part); b = accelerated to 1 g before
+#   end of chilldown; c = lower initial temperature (not enough time to reheat);
+#   d = missing time-series mass flow data. Stored in the 'note' column.
+# Uncertainty stated in the paper: chilldown time 2.1 %, propellant mass 2.5 %.
+test,p_in_kPa,period_s,duty_pct,g_level,coating,t_chill_s,m_chill_kg,Re_steady,G_steady,note
+F1,550,,100,0.38,bare,15.1,1.08,71976,548.87,
+F2,550,,100,0.05,bare,14.6,0.872,67324,533.22,
+F3,550,2,10,0.05,bare,16,0.597,53859,426.58,
+F4,550,3,10,0.05,bare,16.7,0.614,64092,507.63,
+F5,340,,100,0.05,bare,70.6,0.264,1761,22.97,a
+F6,340,4,10,0.05,bare,78.1,0.279,1383,18.04,a
+F7,550,3,7,0.38,bare,21.3,0.637,32621,347.47,
+F8,340,,100,0.05,bare,80.3,0.279,1566,20.42,a
+F9,340,5,4,0.05,bare,162,0.304,881,11.49,a
+F10,340,,100,0.05,bare,172,0.16,992,15.94,a
+F11,440,3,7,0.05,bare,21.3,0.645,29761,306.99,b
+F12,440,,100,0.05,bare,21.1,1.174,53021,459.65,b
+F13,550,,100,0.05,7L,8.19,0.469,63912,506.19,
+F14,550,3,7,0.05,7L,9.94,0.339,38308,351.49,
+F15,550,,100,0.05,7L,6.69,0.309,45760,340.84,
+F16,550,3,7,0.05,7L,10,0.248,43178,329.21,
+F17,340,,100,0.05,7L,12.8,0.0881,8945,73.36,
+F18,440,3,7,0.05,7L,9.31,0.283,38265,364.8,
+F19,440,,100,0.05,7L,7.06,0.514,83353,649.18,c
+F20,440,,100,0.05,7L,7.88,0.585,88127,682.68,
+F21,340,,100,0.05,7L,12.8,0.0855,10949,90.82,
+F22,550,,100,0.05,4L,4.69,0.281,74196,558.16,d
+F23,550,3,7,0.05,4L,9.06,0.269,46373,348.85,d
+F24,550,2,10,0.05,4L,6.19,0.237,63067,474.44,d
+F25,440,,100,0.05,4L,4.5,0.23,59931,476.14,d
+F26,440,3,7,0.05,4L,10,0.288,50941,404.72,d
+F27,340,,100,0.05,4L,7.81,0.0555,8061,66.22,d
+F28,550,3,10,0.05,4L,7.25,0.274,64048,500.43,d
