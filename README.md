@@ -61,3 +61,5 @@ python scripts/run_studies.py      # writes figures/ and results/
 - v1 equilibrium model: done.
 - Validation against NASA LH2 no-vent fill and chilldown data: in progress.
 - v2 transient line chilldown with flow-boiling correlations: planned.
+
+Update 2 Nov: sensitivity study (figure 4), technical note draft (notes/technical_note.md), defend-this sheet, outreach drafts (not sent) and lessons 5 to 8 added.
