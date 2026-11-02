@@ -151,3 +151,9 @@ These would strengthen Validation 1. Please download the PDFs from NTRS and drop
 5. Hartwig, J., Hu, H., Styborski, J., Chung, J.N., "Comparison of cryogenic flow boiling in liquid nitrogen and liquid hydrogen chilldown experiments", Int. J. Heat Mass Transfer 88 (2015), doi:10.1016/j.ijheatmasstransfer.2015.04.102 (NTRS 20190007959 has no download). Needed: per-test LH2 and LN2 chilldown time and mass, for an LH2 version of Validation 2.
 6. Hartwig, J., Darr, S., Asencio, A., "Assessment of existing two phase heat transfer coefficient and critical heat flux correlations for cryogenic flow boiling in pipe quenching experiments", Int. J. Heat Mass Transfer 93 (2016) 441 to 463. Cited as the basis of the correlation choice for v2. Title as cited in secondary sources; check it.
 7. The npj Microgravity 2022 paper above: Figure 2 time histories, to check where the metered mass integration starts.
+
+## Sensitivity study (model only, no test data)
+
+Script: `scripts/run_sensitivity.py`. Results: `results/sensitivity.csv`, `figures/fig4_sensitivity.png`. Tests: `tests/test_sensitivity.py`.
+
+This study uses no external data and is not validated. It shows how the equilibrium model responds to its inputs. It inherits the best-case bias of the model (Validation 1: real fills ran up to 26 % above the predicted pressure), so thresholds such as "no chilldown needed at 10 K subcooling" are optimistic. Trends are the robust result. CHV losses are a staircase in the number of cycles and are not monotonic; the flow-through band is the smooth trend. No structural feedback: wall mass is held fixed when the pressure limit changes.
