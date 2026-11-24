@@ -51,10 +51,12 @@ Thermodynamically, methalox transfer is forgiving. So the hard engineering probl
 ## Use
 
 ```
-pip install CoolProp scipy matplotlib pytest
+python -m pip install CoolProp==8.0.0 scipy matplotlib pytest
 python -m pytest -q
 python scripts/run_studies.py      # writes figures/ and results/
 ```
+
+The committed results were made with CoolProp 8.0.0. CoolProp 8.1.0 changed the nitrogen and methane transport properties (saturated N2 vapour viscosity about 4 % lower, CH4 vapour viscosity at 200 K about 2 % lower; O2 unchanged). With 8.1.0 the equilibrium and validation results are identical, but the transient chilldown results move by up to about 1.5 %: the film-boiling multiplier calibrated on LN2 test F2 becomes 2.389 instead of 2.414, and the 3 m LOX line at 0.5 kg/s needs 3.50 kg instead of 3.44 kg. Pin 8.0.0 to reproduce the numbers in the technical note exactly.
 
 ## Status
 
